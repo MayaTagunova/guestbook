@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
 from app.core.config import settings
+from app.core.routes.entries import router as entries_router
 
 
 def get_application():
@@ -14,6 +16,9 @@ def get_application():
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    _app.include_router(entries_router)
+    add_pagination(_app)
 
     return _app
 
